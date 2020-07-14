@@ -1,0 +1,308 @@
+SITECORE EXPERIENCE COMMERCE DEPLOYMENT IN A DISTRIBUTED TOPOLOGY
+
+    These instructions are provided as guidance to install Sitecore XC in a distributed topology. The scripts are provided as a starting point and must be 
+    customized to meet the specifics of your deployment.
+
+    These deployment instructions are based on scripts included as part of Sitecore XC packages for On Premise WDP for XC 9.3, and make use of two additional 
+    distributed deployment files (deploy.ps1, tasks.json). The purpose of these two additional scripts is to group and execute tasks required for the 
+    deployment of specific roles in the context of a distributed topology.
+
+    The following instructions were tested in a basic distributed deployment topology using two physical machines:  
+
+        * Machine 1: XP1 single developer deployment topology (CD, CM, Processing, Reporting, Identity Server, Solr, Database, Storefront, Redis)
+        * Machine 2: XC roles (Authoring, Shops, Minions, DevOps, BizFX, Redis)
+
+ASSUMPTIONS:
+
+    - These instructions assume Sitecore XP scaled (XP1) is already deployed.
+    - These instructions assume that you are familiar with the XC installation process.
+    - These instructions are based on and make references to sections of Sitecore Experience Commerce Installation Guide for On-Premises Solutions for XC 
+      release 9.3. Make sure to have a copy of the installation guide at hand (available for download at: 
+      https://dev.sitecore.net/Downloads/Sitecore_Commerce/93/Sitecore_Experience_Commerce_93_Initial_Release.aspx).
+
+CONSIDERATIONS ABOUT CERTIFICATES AND APPLICATION POOL IDENTITIES IN A DISTRIBUTED TOPOLOGY:
+
+    - Export the Sitecore Root certificate created during XP1 deployment so that you can import it into XC roles. It will be used to sign the certificates 
+      generated for XC roles.
+    - The SSL certificate used for Solr needs to be trusted and must match the assigned DNS (cannot be localhost) when the Solr search provider is accessed 
+      from both XP1 and XC roles.
+    - Below steps use windows/trusted authentication for remote database access. Therefore a domain user is requried for application pool identities for XC 
+      roles (for example, authoring, shops, and so on.). Alternatively, when SQL authenitcation is used (TrustedConnection = false), a local account 
+      (e.g. CSFndRuntimeUser) can be used for application pool identities.
+    - The Commerce Engine content policy must point to the master DB from XP1 CM role (URL), as there is no master DB for CD role.
+
+INITIAL STEPS:
+
+    1. Create a domain user for XC to connect to XP:
+        The script Deploy-Sitecore-Commerce.ps1 defines domain user account that can be used across the domain. Instead of using $Env:COMPUTERNAME\CSFndRuntimeUser.
+     
+    2. Prepare the XC machine: 
+        a. Follow section "2.2. Download the Sitecore XC release package and prerequisites" and section "2.3. Create a secret client certificate" from the 
+            Sitecore Experience Commerce Installation Guide for On-Premises Solutions .
+        b. Copy the deploy.ps1 and tasks.json to the folder where you extracted the SIF.Sitecore.Commerce.4.0.31 package (e.g. c:\deploy\sif).
+        c. Open the Deploy-Sitecore-Commerce.ps1 file, and make the following modifications:
+            $SiteNamePrefix = "XP0", # Replace with the Prefix used for XP1 deployment.
+            $SolrUrl = "https://localhost:8983/solr", # Replace with the $SolrUrl used for XP1 deployment.
+                Ex.: https://10.45.109.18:8983/solr
+            
+            $SitecoreDbServer = "$($Env:COMPUTERNAME)", # Replace with the SQL instance name accessible from both XP and XC machines.
+                Ex.:10.45.109.18
+            $CommerceServicesDbServer = "$($Env:COMPUTERNAME)", # Replace with the same value as $SitecoreDbServer.
+                Ex.:10.45.109.18
+
+            $UserDomain = $Env:COMPUTERNAME, # Replace with the domain account created during step 1.
+            $UserName ="CSFndRuntimeUser", # Replace with the domain account created during step 1.
+            $UserPassword = "Pu8azaCr", # Replace with password you wanted.  
+        
+        *Note*: Sitecore XC parameters values are aligned with the Sitecore Experience Platform (XP0) default parameters values. If your Sitecore XP 
+            deployment uses custom values, make sure to Customize the Sitecore XC deployment script accordingly.
+
+    3. Export certificates from XP1 and import them into XC machines
+        a. SitecoreRootCert:
+            On the XP1 machine (where we install CD and CM) go to: Certificate Manager > Trusted Root Certification Authorities.... 
+            > export DO_NOT_TRUST_SitecoreRootCert (with private key and set a password).
+            On the XC machine: Import the certificate file (double click) to the XC machine under: Local Machine > Trusted Root Certification Authorities.
+            
+    4. Follow section "2.3. Create a secret client certificate " of the Sitecore Experience Commerce Installation Guide for On-Premises Solutions, and then add 
+        the certificate to Deploy-Sitecore-Commerce.ps1:
+        $CommerceEngineConnectClientSecret = "", # Replace with certificate code generated from "2.3. Create a secret client certificate".
+        
+    5. You need a Braintree sandbox account to enable web payment functionality through the Commerce Engine. Follow the instructions on the Braintree website 
+        (https://www.braintreepayments.com/ca/sandbox) to set up an account, and take note of the MerchantID, Public Key and Private Key information. You need 
+        to specify the values for those parameters in the Sitecore XC deployment script.
+    
+    6. Make sure Redis is installed and running on both XP1 and XC machines.
+
+CUSTOMIZE SCRIPTS AND DEPLOY ROLES IN A DISTRIBUTED TOPOLOGY
+------------------------------------------------------------
+------------------------------------------------------------
+
+Deploy the Content Delivery (cd) role on the XP1 machine:
+------------------------------------------------------------
+    1. Resources:
+        - On the server where you want to install "cd" you should have XP1, otherwise download and deploy XP1.
+        - Create a C:\cd folder
+        - Find, copy and extract msbuild.microsoft.visualstudio.web.targets.zip in C:\cd
+            https://www.nuget.org/packages/MSBuild.Microsoft.VisualStudio.Web.targets/14.0.0.3
+        - Download release package for On Premise WDP 2020.01-5.0.145 from:
+            https://dev.sitecore.net/Downloads/Sitecore_Commerce/93/Sitecore_Experience_Commerce_93_Initial_Release.aspx
+            Copy all the content of previous package to C:\cd
+        - Download Sitecore Experience Accelerator CD for 9.3 package from:
+            https://dev.sitecore.net/Downloads/Sitecore_Experience_Accelerator/9x/Sitecore_Experience_Accelerator_930.aspx
+            Copy all the content of previous package to C:\cd
+        - Download Sitecore PowerShell Extension for Sitecore 9.3 package from:
+            https://dev.sitecore.net/Downloads/Sitecore_Experience_Accelerator/9x/Sitecore_Experience_Accelerator_930.aspx
+            Copy all the content of previous package to C:\cd
+        - Extract C:\cd\SIF.Sitecore.Commerce.4.0.31.zip content on C:\cd
+        - Copy deploy.ps1 and tasks.json in C:\cd\SIF.Sitecore.Commerce.4.0.31 folder 
+
+    2. Parameters: 
+        - Navigate to Commerce\Deploy-Sitecore-Commerce.ps1 and set parameters accordingly
+            - $SiteNamePrefix = "XP1"
+            - $SiteName = "$SiteNamePrefix.cd"
+            - Check if you need to change path on (sometimes the zip name contains dots instead of space separators):
+                - $PowerShellExtensionsModuleZIPFullPath = "$XCInstallRoot\Sitecore PowerShell Extensions*.zip",
+                - $MergeToolFullPath = "$XCInstallRoot\MSBuild.Microsoft.VisualStudio.Web.targets*\14.0.0.3\tools\VSToolsPath\Web\Microsoft.Web.XmlTransform.dll"
+
+    3. Replace parameters for Commerce Engine.
+        - In deploy.ps1 in the post steps of cd role replace parameters in calls to the "WorkAround-Replace-In-File" accordingly to your
+            IIS paths and Commerce Engine Installation. 
+
+    4. Run the deployment script:
+        .\deploy.ps1 -role cd
+
+    5. Go to "C:\inetpub\wwwroot\XP1.cd\App_Config\Include\Y.Commerce.Engine\Sitecore.Commerce.Engine.Connect.config" and replace the parameter
+        "clientSecretHash" with the value from "ClientSecret1" on file "C:\inetpub\wwwroot\XP1.identityserver\Config\production\Sitecore.Commerce.IdentityServer.Host.xml"
+
+Deploy the Content Management (cm) role on the XP1 machine:
+------------------------------------------------------------
+    NOTE: Resources for cm are the same, yo can make a copy of cd folder (with all the packages).
+    1. Resources:
+        - On the server where you want to install "cm" you should have XP1, otherwise download and deploy XP1.
+        - Create a C:\cm folder
+        - Find, copy and extract msbuild.microsoft.visualstudio.web.targets.zip in C:\cm
+            https://www.nuget.org/packages/MSBuild.Microsoft.VisualStudio.Web.targets/14.0.0.3
+        - Download release package for On Premise WDP 2020.01-5.0.145 from:
+            https://dev.sitecore.net/Downloads/Sitecore_Commerce/93/Sitecore_Experience_Commerce_93_Initial_Release.aspx
+            Copy all the content of previous package to C:\cm
+        - Download Sitecore Experience Accelerator for 9.3 package from:
+            https://dev.sitecore.net/Downloads/Sitecore_Experience_Accelerator/9x/Sitecore_Experience_Accelerator_930.aspx
+            Copy all the content of previous package to C:\cm
+        - Download Sitecore PowerShell Extension for Sitecore 9.3 package from:
+            https://dev.sitecore.net/Downloads/Sitecore_Experience_Accelerator/9x/Sitecore_Experience_Accelerator_930.aspx
+            Copy all the content of previous package to C:\cm
+        - Extract C:\cm\SIF.Sitecore.Commerce.4.0.31.zip content on C:\cm
+        - Copy deploy.ps1 and tasks.json in C:\cm\SIF.Sitecore.Commerce.4.0.31 folder
+
+    2. Parameters: 
+        - Open the C:\cm\SIF.Sitecore.Commerce.4.0.31\Configuration\Commerce\Master_SingleServer.json file and search for 
+        the following line:
+            "Site.RootUrl": "[concat('http://', parameter('SiteHostHeaderName'))]",
+        - In the "Site.RootUrl" value, replace "http" by "https":
+            "Site.RootUrl": "[concat('https://', parameter('SiteHostHeaderName'))]"
+        - Open the Commerce\Deploy-Sitecore-Commerce.ps1 file, and make the following changes:
+            - $SiteNamePrefix = "XP1"
+            - $SiteName = "$SiteNamePrefix.cm"
+            - $SiteHostHeaderName = "$SiteNamePrefix.cm"
+        - Check if you need to change path on (sometimes the zip name contains dots instead of space separators):
+            - $PowerShellExtensionsModuleZIPFullPath = "$XCInstallRoot\Sitecore PowerShell Extensions*.zip",
+
+    3. Replace parameters for Commerce Engine.
+        - In deploy.ps1 in the post steps of cm1 and cm2 role replace parameters in calls to the "WorkAround-Replace-In-File" accordingly to your
+            IIS paths and Commerce Engine Installation. 
+
+    4. Check redis is up and running.
+
+    5. Run the deployment script:
+        .\deploy.ps1 -role cm1
+        .\deploy.ps1 -role cm2
+
+Deploy the Identity Server role on the XP1 machine:
+------------------------------------------------------------
+    Run the deployment script:
+        .\deploy.ps1 -role id
+
+Deploy the Solr role on the XP1 machine:
+------------------------------------------------------------
+    Run the deployment script:
+        .\deploy.ps1 -role solr
+
+Deploy the XConnect role on the XP1 machine:
+------------------------------------------------------------
+    Run deploy script:
+        .\deploy.ps1 -role xc_xconn
+
+Deploy the XConnect Marketing Automation (ma) role on the XP1 machine:
+------------------------------------------------------------
+    Run deploy script:
+        .\deploy.ps1 -role xc_ma
+
+Deploy the database roles on the XP1 machine:
+------------------------------------------------------------
+    Run the deployment script:
+        .\deploy.ps1 -role  db_images
+        .\deploy.ps1 -role  db_users
+
+Prerequisies on the XC machine:
+------------------------------------------------------------
+Copy cd or cm folder from XP1 server to XC server
+
+Deploy Commerce Engine prerequisites on the XC machine:
+------------------------------------------------------------
+    1. Modify parameters:  
+        Open the Commerce\Deploy-Sitecore-Commerce.ps1 file, and make the following changes: 
+            $SiteHostHeaderName = "$SiteNamePrefix.cm", # Change to "$SiteNamePrefix.cm"
+            $UserDomain = "DK", 
+            $UserName = "<<USERNAME>>",  <-- the domain account
+            $UserPassword = "<<PASSWORD>>",
+
+    2. Run the deployment script:
+        .\deploy.ps1 -role ce_pre
+
+Deploy the Commerce Engine Ops role on the XC machine:
+------------------------------------------------------------
+    Run deploy script:
+        .\deploy.ps1 -role ce_ops
+    
+Deploy the Commerce Engine Shops role on the XC machine:
+------------------------------------------------------------
+    Run deploy script:
+        .\deploy.ps1 -role ce_shops
+
+Deploy the Commerce Engine Authoring role on the XC machine:
+------------------------------------------------------------
+    Run deploy script:
+        .\deploy.ps1 -role ce_auth
+
+Deploy the Commerce Engine Minions role on the XC machine:
+------------------------------------------------------------
+    Run deploy script:
+        .\deploy.ps1 -role ce_minions
+
+Initialize Commerce Engine on the XC machine:
+------------------------------------------------------------
+    1. Modify parameters:  
+        Open the Commerce\Deploy-Sitecore-Commerce.ps1 file, and make the following changes: 
+            $SitecoreUserPassword = "<<SITECORE_ADMIN_PASSWORD>>",
+    2. Make sure that ID server on XP1 has been restarted (restart iis on XP1).
+    3. Update hosts file to point to XP1.identityserver (10.45.109.12    XP1.identityserver).
+    4. Export the root certificate from XP1.identityserver and import to XC.
+    5. Go to commerce roles on IIS folder (C:\inetpub\wwwroot\Commerce*\wwwroot) and edit config.json
+        Search for :
+        "Redis":  {
+            "Enabled":  true,
+            "CacheStoreName":  "Commerce-Redis-Store",
+            "Options":  {
+                "Configuration":  "localhost",  <-- replace with host:port of XP1 redis 
+                "InstanceName":  "Redis"
+            }
+        }
+    5. Restart commerce ops or IIS.
+    6. Run deployment script:
+        .\deploy.ps1 -role ce_init 
+
+Deploy the Commerce Engine Poststeps on the XC machine:
+------------------------------------------------------------
+    1. Check that antiforgery is disabled on all CE instances:
+        In the config file under C:\inetpub\wwwroot\*\wwwroot, set "AntiForgeryEnabled": "false"
+    2. Update hosts file to point to XP1.cm (10.45.109.12    XP1.cm).
+    3. Export the root certificate from XP1.cm and import to XC.
+    4. In the file C:\inetpub\wwwroot\*wwwroot\data\Environments\Plugin.SQL.PolicySet-1.0.0.json, change "TrustedConnection" from 
+        "true" to "false" and "UserName" from "ComputerName\CSFndRuntimeUser" to "sa" (or your SQL user and password).
+    5. Restart IIS.
+    6. Run the deployment script:
+        .\deploy.ps1 -role ce_post
+
+Deploy the SitecoreBizFx role on the XC machine:
+------------------------------------------------------------
+    1. Go to commerce ops iis folder (C:\inetpub\wwwroot\CommerceAuthoring_Sc9\wwwroot) and edit config.json
+        Search for :
+        "Redis":  {
+            "Enabled":  true,
+            "CacheStoreName":  "Commerce-Redis-Store",
+            "Options":  {
+                "Configuration":  "localhost",  <-- replace with host:port of XP1 redis 
+                "InstanceName":  "Redis"
+            }
+        }
+    2. Restart commerce authoring or IIS.
+    3. Run deploy script:
+        .\deploy.ps1 -role bizfx
+
+Deploy the default storefront on the XP1 machine: 
+------------------------------------------------------------
+    1. Update hosts file to point to XC server  
+        10.45.109.140    commerceshops.sc9.com
+        10.45.109.140    commerceops.sc9.com
+        10.45.109.140    commerceauthoring.sc9.com
+        10.45.109.140    commerceminions.sc9.com
+
+    2. Go to "C:\inetpub\wwwroot\XP1.cm\App_Config\Include\Y.Commerce.Engine\Sitecore.Commerce.Engine.Connect.config" and replace the parameter
+        "clientSecretHash" with the value from "ClientSecret1" on file "C:\inetpub\wwwroot\XP1.identityserver\Config\production\Sitecore.Commerce.IdentityServer.Host.xml"
+
+    3. Run deploy script:
+        .\deploy.ps1 -role sf
+
+TROUBLESHOOTING AND TIPS
+------------------------------------------------------------
+------------------------------------------------------------
+    1. Default storefront site fails to load or loads without catalog navigation bar.
+        If, after completing the deployment procedure, the default storefront site fails to load or loads without displaying the catalog navigation 
+        bar, you can perform the following procedures as possible solutions:
+            • Verify the template overrides values through sitecore content editor, by going to the Template Overrides section, and verify that the 
+            value template override.
+            • Refresh the Commerce cache and data templates by clicking the Commerce tab, on the ribbon, clicking Delete Data Templates then clicking 
+        Update Data Templates:
+            • Republish the site.
+            • Rebuild the indexes (master and web).
+
+    2. Default storefront site fails to load images of catalogs, categories, or loads items with error "/Commerce Search Results/Default/Scriban(6,62) : error "
+        You can perform the following procedures as possible solutions:
+            • Refresh the Commerce cache and data templates by clicking the Commerce tab, on the ribbon, clicking Delete Data Templates then clicking 
+            Update Data Templates.
+            • Republish the site.
+
+    3. Default storefront site fails to register a new user with "The Domain is null and is probably not defined in Domain Manager"
+        Refer to the link https://sitecore.stackexchange.com/questions/17438/storefront-registering-an-account-domain-is-null/17439#17439 to fix the problem. 
+        Or you just need to make sure that the Storefront user is in the Domains.config on cd security folder \wwwroor\XP1.cd\App_Config\Security 
+        (copied over from cm).

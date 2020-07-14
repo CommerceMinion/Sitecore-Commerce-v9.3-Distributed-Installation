@@ -1,0 +1,838 @@
+[
+    {
+        "taskName": "IdentityServer_UpdateAllowedCorsOriginsGroup1",
+        "role": "id"
+    },
+    {
+        "taskName": "IdentityServer_AddAllowedCorsOriginsGroup2",
+        "role": "id"
+    },
+    {
+        "taskName": "IdentityServer_UpdateCEConnectAllowedCorsOriginsGroup1",
+        "role": "id"
+    },
+    {
+        "taskName": "IdentityServer_UpdateCEConnectClientId",
+        "role": "id"
+    },
+    {
+        "taskName": "IdentityServer_UpdateCEConnectClientSecret",
+        "role": "id"
+    },
+    {
+        "taskName": "IdentityServer_CopyIdentityServerCommerceConfiguration",
+        "role": "id"
+    },
+    {
+        "taskName": "Solr_StopSolr",
+        "role": "solr"
+    },
+    {
+        "taskName": "Solr_CleanCores",
+        "role": "solr"
+    },
+    {
+        "taskName": "Solr_PrepareCores",
+        "role": "solr"
+    },
+    {
+        "taskName": "Solr_CopySchemaFiles",
+        "role": "solr"
+    },
+    {
+        "taskName": "Solr_StartSolr",
+        "role": "solr"
+    },
+    {
+        "taskName": "Solr_CreateCores",
+        "role": "solr"
+    },
+    {
+        "taskName": "CommerceEngine-Pre_ClearRedis",
+        "role": "ce_pre"
+    },
+    {
+        "taskName": "CommerceEngine-Pre_CreateSignedCert",
+        "role": "ce_pre"
+    },
+    {
+        "taskName": "CommerceEngine-Pre_CreateLocalhostSignedCert",
+        "role": "ce_pre"
+    },
+    {
+        "taskName": "CommerceEngine-Pre_EnsureLocalUser",
+        "role": "MANUAL_STEPS_A_NETWORK_ACCOUNT_WITH_ONWER_PRIVILEGES_ON_SQL_SHOULD_BE_CREATED"
+    },
+    {
+        "taskName": "CommerceEngine-Pre_AddCommerceUserToCoreDatabase",
+        "role": "MANUAL_STEPS_THE_PREVIUS_NETWORK_ACCOUNT_SHOULD_BE_ADDED_ON_SQL_DATABASES_WITH_ONWER_PRIVILEGES#"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreatePaths",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateAppPool",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateAppPoolForMinion",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateWebsite",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateWebsiteForMinion",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_StopWebsite",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_StopAppPool",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_RemoveDefaultBinding",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateBindings",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateHostBinding",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_CreateHostHeader",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_SetPermissions",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_InstallWdpSOLR",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_StartAppPool",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Ops_StartWebsite",
+        "role": "ce_ops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreatePaths",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateAppPool",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateAppPoolForMinion",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateWebsite",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateWebsiteForMinion",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_StopWebsite",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_StopAppPool",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_RemoveDefaultBinding",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateBindings",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateHostBinding",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_CreateHostHeader",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_SetPermissions",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_InstallWdpSOLR",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_StartAppPool",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Shops_StartWebsite",
+        "role": "ce_shops"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreatePaths",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateAppPool",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateAppPoolForMinion",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateWebsite",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateWebsiteForMinion",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_StopWebsite",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_StopAppPool",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_RemoveDefaultBinding",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateBindings",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateHostBinding",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_CreateHostHeader",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_SetPermissions",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_InstallWdpSOLR",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_StartAppPool",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Authoring_StartWebsite",
+        "role": "ce_auth"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreatePaths",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateAppPool",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateAppPoolForMinion",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateWebsite",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateWebsiteForMinion",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_StopWebsite",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_StopAppPool",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_RemoveDefaultBinding",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateBindings",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateHostBinding",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_CreateHostHeader",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_SetPermissions",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_InstallWdpSOLR",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_StartAppPool",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "CommerceEngine-Minions_StartWebsite",
+        "role": "ce_minions"
+    },
+    {
+        "taskName": "BizFx_BizFx-CreatePaths",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-CreateAppPool",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-CreateWebsite",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-StopWebsite",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-StopAppPool",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-RemoveDefaultBinding",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-CreateBindings",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-CreateHostBinding",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-CreateHostHeader",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-SetPermissions",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-InstallWDP",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-StartAppPool",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "BizFx_BizFx-StartWebsite",
+        "role": "bizfx"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_CreatePaths",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_CreateSignedCert",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_StopWebsite",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_StopAppPool",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_CreateBindingsWithThumprint",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_CreateHostHeader",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_StartAppPool",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_StartWebsite",
+        "role": "cd"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_CopySiteUtilityFolder",
+        "role": "cd, cm1, sf"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_DisableIndexUpdate",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "StoreFront-PreconfigureInstance_DisableConfigFiles",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-DirDst-EnsurePath_EnsurePath",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-PowershellExtensions_ECHO",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-PowershellExtensions_CheckPaths",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-PowershellExtensions_InstallModule",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-SXAFramework_ECHO",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-SXAFramework_CheckPaths",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-SXAFramework_InstallModule",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Publish-Extensions_Sleep",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Publish-Extensions_PublishToWeb",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-HabitatImages_InstallWDPModuleMasterCore",
+        "role": "db_images"
+    },
+    {
+        "taskName": "Module-HabitatImages_InstallWDPModuleMaster",
+        "role": "db_images"
+    },
+    {
+        "taskName": "Module-HabitatImages_InstallWDPModuleCore",
+        "role": "db_images"
+    },
+    {
+        "taskName": "Module-AdventureWorksImages_InstallWDPModuleMasterCore",
+        "role": "db_images"
+    },
+    {
+        "taskName": "Module-AdventureWorksImages_InstallWDPModuleMaster",
+        "role": "db_images"
+    },
+    {
+        "taskName": "Module-AdventureWorksImages_InstallWDPModuleCore",
+        "role": "db_images"
+    },
+    {
+        "taskName": "Module-CommerceConnect_InstallWDPModuleMasterCore",
+        "role": "cd, cm1, xc_xconn"
+    },
+    {
+        "taskName": "Module-CommerceConnect_InstallWDPModuleMaster",
+        "role": "cd, cm1, xc_xconn"
+    },
+    {
+        "taskName": "Module-CommerceConnect_InstallWDPModuleCore",
+        "role": "cd, cm1, xc_xconn"
+    },
+    {
+        "taskName": "Module-CommercexProfiles_InstallWDPModuleMasterCore",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-CommercexProfiles_InstallWDPModuleMaster",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-CommercexProfiles_InstallWDPModuleCore",
+        "role": "cm1"
+    },
+    {
+        "taskName": "Module-CommercexAnalytics_InstallWDPModuleMasterCore",
+        "role": "cm1, prc, rep"
+    },
+    {
+        "taskName": "Module-CommercexAnalytics_InstallWDPModuleMaster",
+        "role": "cm1, prc, rep"
+    },
+    {
+        "taskName": "Module-CommercexAnalytics_InstallWDPModuleCore",
+        "role": "cm1, prc, rep"
+    },
+    {
+        "taskName": "CopyConnectModels_StopServices",
+        "role": "xc_xconn"
+    },
+    {
+        "taskName": "CopyConnectModels_CopyModelsToXConnect",
+        "role": "WORKAROUND_TAKS_ON_DEPLOY_OF_XC_CONN"
+    },
+    {
+        "taskName": "CopyConnectModels_CopyModelsToIndexWorker",
+        "role": "WORKAROUND_TAKS_ON_DEPLOY_OF_XC_CONN"
+    },
+    {
+        "taskName": "CopyConnectModels_CopyXConnectPluginConfigFiles",
+        "role": "WORKAROUND_TAKS_ON_DEPLOY_OF_XC_CONN"
+    },
+    {
+        "taskName": "CopyConnectModels_CopyXConnectPredicateConfigFiles",
+        "role": "WORKAROUND_TAKS_ON_DEPLOY_OF_XC_CONN"
+    },
+    {
+        "taskName": "CopyConnectModels_CopyModelDllToXConnect",
+        "role": "WORKAROUND_TAKS_ON_DEPLOY_OF_XC_CONN"
+    },
+    {
+        "taskName": "CopyConnectModels_StartServices",
+        "role": "xc_xconn"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation-EnsurePath_EnsurePath",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation_InstallWDPModuleMasterCore",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation_InstallWDPModuleMaster",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation_InstallWDPModuleCore",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation-Post_StopServices",
+        "role": "xc_ma"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation-Post_InstallAutomationEngineModule",
+        "role": "xc_ma"
+    },
+    {
+        "taskName": "Module-CommerceMarketingAutomation-Post_StartServices",
+        "role": "xc_ma"
+    },
+    {
+        "taskName": "Module-CEConnect-EnsurePath_EnsurePath",
+        "role": "NOT_NEEDED"
+    },
+    {
+        "taskName": "Module-CEConnect_InstallWDPModuleMasterCore",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CEConnect_InstallWDPModuleMaster",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CEConnect_InstallWDPModuleCore",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "Module-CEConnect-Post_MergeWebConfig",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CommerceAdministrator",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CommerceBusinessUser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CustomerServiceRepresentative",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CustomerServiceRepresentativeAdministrator",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Merchandiser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Pricer",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_PricerManager",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Promotioner",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_PromotionerManager",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_RelationshipAdministrator",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_QA",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Admin-CommerceAdministrator",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CustomerServiceRepresentative-CommerceBusinessUser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_RelationshipAdministrator-CommerceBusinessUser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Pricer-CommerceBusinessUser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Promotioner-CommerceBusinessUser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_Merchandiser-RelationshipAdministrator",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_PricerManager-Pricer",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_PromotionerManager-Promotioner",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CustomerServiceRepresentativeAdministrator-CustomerServiceRepresentative",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CommerceAdministrator-CustomerServiceRepresentativeAdministrator",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CommerceAdministrator-PricerManager",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CommerceAdministrator-PromotionerManager",
+        "role": "db_users"
+    },
+    {
+        "taskName": "CEConnect-UsersAndRoles_CommerceAdministrator-Merchandiser",
+        "role": "db_users"
+    },
+    {
+        "taskName": "SXAStorefrontWdpsInstall_InstallCXAWDP",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "SXAStorefrontWdpsInstall_InstallSXAStorefrontWDP",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "SXAStorefrontWdpsInstall_InstallStorefrontThemesWDP",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "SXAStorefrontWdpsInstall_InstallStorefrontCatalogWDP",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "SXAStorefrontPostInstallationSteps_MergeWebConfig",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "CEConnect-InitializeCommerce_UpdateHostnames",
+        "role": "MANUAL_STEPS"
+    },
+    {
+        "taskName": "CEConnect-InitializeCommerce_UpdateIdServerSettings",
+        "role": "MANUAL_STEPS"
+    },
+    {
+        "taskName": "CEConnect-InitializeCommerce_UpdatePorts",
+        "role": "MANUAL_STEPS"
+    },
+    {
+        "taskName": "CommerceEngine-Post_CreatePerformanceCounters",
+        "role": "ce_init"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_DisableCsrfValidation",
+        "role": "ce_init"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_UpdateCeConnectClientId",
+        "role": "ce_init"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_RestartWebAppPoolOps",
+        "role": "ce_init"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_GetIdServerToken",
+        "role": "ce_init, ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_BootStrapCommerceServices",
+        "role": "ce_init, ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_EnsureSyncDefaultContentPaths",
+        "role": "ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_InitializeCommerceServices",
+        "role": "ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_IndexCatalogItems",
+        "role": "ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_IndexPriceCardSnapshots",
+        "role": "ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_IndexPromotions",
+        "role": "ce_post"
+    },
+    {
+        "taskName": "CommerceEngine-Initialize_EnableCsrfValidation",
+        "role": "ce_post"
+    },
+    {
+        "taskName": "CEConnect-EnableDataProvider_EnableConfigFiles",
+        "role": "cd, cm1"
+    },
+    {
+        "taskName": "CEConnect-GenerateCatalogTemplates_GenerateCatalogTemplates",
+        "role": "cm2"
+    },
+    {
+        "taskName": "CEConnect-GenerateCatalogTemplates_StopWebsite",
+        "role": "cm2"
+    },
+    {
+        "taskName": "CEConnect-GenerateCatalogTemplates_StopAppPool",
+        "role": "cm2"
+    },
+    {
+        "taskName": "CEConnect-GenerateCatalogTemplates_Sleep",
+        "role": "cm2"
+    },
+    {
+        "taskName": "CEConnect-GenerateCatalogTemplates_StartAppPool",
+        "role": "cm2"
+    },
+    {
+        "taskName": "CEConnect-GenerateCatalogTemplates_StartWebsite",
+        "role": "cm2"
+    },
+    {
+        "taskName": "SXAStorefront-CreateDefaultTenantAndSite_EnableSPEWebAPI",
+        "role": "sf"
+    },
+    {
+        "taskName": "SXAStorefront-CreateDefaultTenantAndSite_RestartWebAppPoolOps",
+        "role": "sf"
+    },
+    {
+        "taskName": "SXAStorefront-CreateDefaultTenantAndSite_CreateDefaultStorefront",
+        "role": "sf"
+    },
+    {
+        "taskName": "SXAStorefront-CreateDefaultTenantAndSite_DisableSPEWebAPI",
+        "role": "sf"
+    },
+    {
+        "taskName": "Publish-Commerce_Sleep",
+        "role": "cm2"
+    },
+    {
+        "taskName": "Publish-Commerce_PublishToWeb",
+        "role": "cm2"
+    },
+    {
+        "taskName": "SXAStorefront-EnableSearch_EnableIndexUpdate",
+        "role": "cd, cm2"
+    },
+    {
+        "taskName": "SXAStorefront-EnableSearch_EnableConfigFiles",
+        "role": "cd, cm2"
+    },
+    {
+        "taskName": "CEConnect-EnableIndexing_EnableConfigFiles",
+        "role": "cd, cm2"
+    },
+    {
+        "taskName": "RebuildIndexes_RebuildIndex-Core",
+        "role": "cm2"
+    },
+    {
+        "taskName": "RebuildIndexes_RebuildIndex-Master",
+        "role": "cm2"
+    },
+    {
+        "taskName": "RebuildIndexes_RebuildIndex-Web",
+        "role": "cm2"
+    },
+    {
+        "taskName": "RebuildDescendants_RebuildDescendants",
+        "role": "cm2"
+    },
+    {
+        "taskName": "RemoveSiteUtilityFolder_RemoveSiteUtilityFolder",
+        "role": "cd, cm2"
+    }
+]
