@@ -100,7 +100,7 @@ switch ($role) {
         WorkAround-Fake-Redis
         WorkAround-Copy-SXA
     }
-    { "cm1", "prc", "db_users" } {
+    { $_ -in "cm1", "prc", "db_users" } {
         WorkAround-Fake-Xconnect
         WorkAround-Fake-Redis
     }
@@ -111,7 +111,7 @@ switch ($role) {
     "xc_ma" {
         WorkAround-Data-For-MA
     }
-    { "bizfx", "sf" } {
+    { $_ -in "bizfx", "sf" } {
         WorkAround-Fake-SC
         WorkAround-Fake-Xconnect
         WorkAround-Fake-Solr
@@ -134,7 +134,7 @@ Write-Host "Actual deployment is done"
 
 Write-Host "Running post-steps"
 switch ($role) {
-    { "id", "xc_ma" } {
+    { $_ -in "id", "xc_ma" } {
         Remove-Item "C:\inetpub\wwwroot\XP1.sc\XConnectFiles" -Recurse -Force -ErrorAction SilentlyContinue
     }
     "cd" {
@@ -167,7 +167,7 @@ switch ($role) {
         Remove-Item "$($Env:SYSTEMDRIVE)\inetpub\wwwroot\XP1.XConnect" -Recurse -Force -ErrorAction SilentlyContinue
         Remove-Item "$($Env:SYSTEMDRIVE)\Program Files\Redis" -Recurse -Force -ErrorAction SilentlyContinue
     }
-    { "ce_post", "bizfx", "sf" } {
+    { $_ -in "ce_post", "bizfx", "sf" } {
         Remove-Item "$($Env:SYSTEMDRIVE)\inetpub\wwwroot\XP1.sc" -Recurse -Force -ErrorAction SilentlyContinue
         Remove-Item "$($Env:SYSTEMDRIVE)\inetpub\wwwroot\XP1.xconnect" -Recurse -Force -ErrorAction SilentlyContinue
         Remove-Item "$($Env:SYSTEMDRIVE)\solr-8.1.1" -Recurse -Force -ErrorAction SilentlyContinue
