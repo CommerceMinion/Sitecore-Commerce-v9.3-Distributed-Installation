@@ -6,6 +6,15 @@ SITECORE EXPERIENCE COMMERCE DEPLOYMENT IN A DISTRIBUTED TOPOLOGY
     These deployment instructions are based on scripts included as part of Sitecore XC packages for On Premise WDP for XC 9.3, and make use of two additional 
     distributed deployment files (deploy.ps1, tasks.json). The purpose of these two additional scripts is to group and execute tasks required for the 
     deployment of specific roles in the context of a distributed topology.
+    
+    Inside deploy.ps1 file, there are hardcoded paths like xp1.cd, xp1.cm as well as ones related to XConnect like xp1.search, xp1.collection etc. These paths are 
+	used to copy or update files in the CD or CM installs. So please make sure replace them with the real paths according to your installs. 
+    
+    Also in deploy.ps1 file, there are other hardcoded paths like xp1.sc, xp1.xconnect, solr-8.1.1, redis. These paths are created as empty folders, normally inside 
+	the WorkAround-Fake-* functions in deploy.ps1, on the roles where such folders do not actually exist locally. There are Resolve-ItemPath inside the original XC9.3 
+	Deploy-Sitecore-Commerce.ps1 to validate these paths as it assumes all roles exist on the same machine. So these empty folders are created as workaround to pass 
+	the validation because no changes made to the original XC9.3 SIF code logic. So please make sure to replace them with the corresponding paths/values as defined in 
+	the Deploy-Sitecore-Commerce.ps1
 
     The following instructions were tested in a basic distributed deployment topology using two physical machines:  
 
@@ -28,7 +37,9 @@ CONSIDERATIONS ABOUT CERTIFICATES AND APPLICATION POOL IDENTITIES IN A DISTRIBUT
       from both XP1 and XC roles.
     - Below steps use windows/trusted authentication for remote database access. Therefore a domain user is requried for application pool identities for XC 
       roles (for example, authoring, shops, and so on.). Alternatively, when SQL authenitcation is used (TrustedConnection = false), a local account 
-      (e.g. CSFndRuntimeUser) can be used for application pool identities.
+      (e.g. CSFndRuntimeUser) can be used for application pool identities. In such case, a SQL account with proper permissions needs to be provided in the 
+	  "UserName" and "Password" fields inside wwwroot\bootstrap\Global.json and wwwroot\data\Environments\Plugin.SQL.PolicySet-1.0.0.json files for global and 
+	  shared databases access respectively
     - The Commerce Engine content policy must point to the master DB from XP1 CM role (URL), as there is no master DB for CD role.
 
 INITIAL STEPS:
@@ -71,7 +82,15 @@ INITIAL STEPS:
         (https://www.braintreepayments.com/ca/sandbox) to set up an account, and take note of the MerchantID, Public Key and Private Key information. You need 
         to specify the values for those parameters in the Sitecore XC deployment script.
     
-    6. Make sure Redis is installed and running on both XP1 and XC machines.
+    6. Make sure Redis is installed and running on both XP1 and XC machines. However if your Redis is installed remotely to XP1 and XC machines, you need take extra 
+	steps/considerations as below
+		Update the Redis connection information inside your Sitecore CM/CD installs (inside \App_Config\Include\Y.Commerce.Engine\Sitecore.Commerce.Engine.Connect.config file) 
+	to replace the default "localhost" with your actual Redis hostname/IP and port. 
+		The install scripts call "RedisCli.exe" to refresh Redis during execution. In order to call the "RedisCli.exe" from a remote location, the $RedisInstallationPath needs 
+	to be a network path with proper permissions given to the user identity running the deployment scripts. Also the hostname value (as defined in the $RedisConfiguration 
+	variable in Deploy-Sitecore-Commerce.ps1) needs to be passed to RedisCli.exe as parameter "-h" (by changing the \Modules\SitecoreUtilityTasks\SitecoreUtilityTasks.psm1 
+	file from the SIF folder). More information about the RedisCli.exe can be found from https://redis.io/topics/rediscli. As another alternative, you can remove the 
+	"CommerceEngine-Pre_ClearRedis" taskname from the tasks.json file and manually refresh Redis cache before running the deployment scripts.
 
 CUSTOMIZE SCRIPTS AND DEPLOY ROLES IN A DISTRIBUTED TOPOLOGY
 ------------------------------------------------------------
